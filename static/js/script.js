@@ -24,14 +24,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    window.addEventListener('beforeunload', function () {
+    window.addEventListener('beforeunload', function() {
         var fullName = getUserFullName(); // Replace this with your own logic to get the user's full name
         if (fullName) {
             deleteUser(fullName);
         }
     });
 
-    // Get the full name from the form submission in user.html
     var userForm = document.getElementById('userForm');
     userForm.addEventListener('submit', function(event) {
         event.preventDefault();
@@ -48,6 +47,20 @@ document.addEventListener('DOMContentLoaded', function() {
         if (tableColumn) {
             var newUserBox = createUserBox(fullName);
             tableColumn.appendChild(newUserBox);
+            // Create a remove button for each user
+            var removeButton = document.createElement('button');
+            removeButton.textContent = 'Remove';
+            removeButton.onclick = function() {
+                removeUser(fullName);
+            };
+            newUserBox.appendChild(removeButton);
+        }
+    }
+
+    function removeUser(fullName) {
+        var userBox = document.querySelector('.user-box.' + fullName);
+        if (userBox) {
+            userBox.parentNode.removeChild(userBox);
         }
     }
 
@@ -58,7 +71,5 @@ document.addEventListener('DOMContentLoaded', function() {
             userBox.classList.add(color);
         }
     }
-
-    // Rest of the code...
 
 });

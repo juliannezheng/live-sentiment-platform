@@ -83,6 +83,9 @@ def color(full_name, table_selection):
 
 @app.route('/admin_success')
 def admin_success():
+    if not session.get('authenticated'):
+        return redirect(url_for('admin'))
+    
     cursor = get_db().cursor()
     cursor.execute('SELECT * FROM users_new WHERE color IS NOT NULL')
     user_data = cursor.fetchall()
@@ -109,11 +112,15 @@ def admin():
     if request.method == 'POST':
         password = request.form.get('password')
         if password == 'chfam':
+            session['authenticated'] = True  # Set session variable to indicate authentication
             return redirect(url_for('admin_success'))
         else:
             return redirect(url_for('user'))
     else:
-        return render_template('admin.html')
+        if session.get('authenticated'):
+            return redirect(url_for('admin_success'))
+        else:
+            return render_template('admin.html')
 
 if __name__ == '__main__':
     socketio.run(app, debug=True, port=8080)

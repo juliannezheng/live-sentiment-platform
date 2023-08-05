@@ -156,7 +156,7 @@
     </div>
 
     <div class="clear-button">
-        <button class="clear-users" onclick="clearAllUsers()">Clear All Users</button>
+        <button class="clear-users" onclick="clearAllUsers()">Clear Users</button>
     </div>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.3/socket.io.js"></script>
@@ -172,12 +172,12 @@
             });
         }
         function clearAllUsers() {
-            if (confirm('Are you sure you want to clear all users?')) {
+            if (confirm('Are you sure you want to clear users?')) {
                 $.post('/clear_users', function(response) {
                     if (response.success) {
                         location.reload();
                     } else {
-                        alert('Failed to clear all users.');
+                        alert('Failed to clear users.');
                     }
                 });
             }

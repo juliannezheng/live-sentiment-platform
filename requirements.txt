@@ -1,0 +1,5 @@
+Flask
+Flask-SocketIO
+gevent-websocket
+gunicorn
+sqlite3

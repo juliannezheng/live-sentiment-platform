@@ -47,12 +47,15 @@
         }
 
         .table-column {
+            background-color: white; /* This ensures the table boxes are always white */
             width: 300px;
             margin: 10px;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: added a subtle shadow for better distinction from the background */
         }
+
 
         .table-title {
             text-align: center;
@@ -118,7 +121,7 @@
         }
     </style>
 </head>
-<body>
+<body style="background-color: {{ background_color }};">
     <div class="blue-banner">
         <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="logo">
     </div>

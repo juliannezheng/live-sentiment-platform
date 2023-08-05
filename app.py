@@ -87,9 +87,39 @@ def admin_success():
         return redirect(url_for('admin'))
     
     cursor = get_db().cursor()
+    cursor.execute('SELECT color, COUNT(*) FROM users_new WHERE color IS NOT NULL GROUP BY color')
+    color_data = cursor.fetchall()
+
+    # Define your custom colors in RGB format
+    CUSTOM_RED = (255, 153, 153)
+    CUSTOM_YELLOW = (255, 238, 153)
+    CUSTOM_GREEN = (153, 230, 153)
+
+    red_weight, yellow_weight, green_weight = 0, 0, 0
+    for color, count in color_data:
+        if color == 'red':
+            red_weight = count
+        elif color == 'yellow':
+            yellow_weight = count
+        elif color == 'green':
+            green_weight = count
+
+    total_count = red_weight + yellow_weight + green_weight
+    if total_count == 0:  # To avoid ZeroDivisionError
+        background_color = '#FFFFFF'  # Default white background
+    else:
+        # Calculate the weighted RGB values using custom colors
+        r = (red_weight * CUSTOM_RED[0] + green_weight * CUSTOM_GREEN[0] + yellow_weight * CUSTOM_YELLOW[0]) / total_count
+        g = (red_weight * CUSTOM_RED[1] + green_weight * CUSTOM_GREEN[1] + yellow_weight * CUSTOM_YELLOW[1]) / total_count
+        b = (red_weight * CUSTOM_RED[2] + green_weight * CUSTOM_GREEN[2] + yellow_weight * CUSTOM_YELLOW[2]) / total_count
+
+        # Ensure values are between 0 and 255 and convert RGB values to hexadecimal
+        background_color = "#{:02x}{:02x}{:02x}".format(max(0, min(int(r), 255)), max(0, min(int(g), 255)), max(0, min(int(b), 255)))
+    
     cursor.execute('SELECT * FROM users_new WHERE color IS NOT NULL')
     user_data = cursor.fetchall()
-    return render_template('admin_success.html', user_data=user_data)
+    return render_template('admin_success.html', user_data=user_data, background_color=background_color)
+
 
 @app.route('/remove_user', methods=['POST'])
 def remove_user():

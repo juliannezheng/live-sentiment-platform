@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Page</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .blue-banner {
+            height: 1.5in; /* Adjust the height as needed */
+            background-color: lightblue;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            height: 0.75in; /* Adjust the logo height */
+            margin-left: 20px; /* Adjust the left margin as needed */
+        }
+
+        .admin-link {
+            color: black;
+            text-decoration: none;
+            font-size: 20px;
+            margin-left: auto; /* Adjust the left margin as needed */
+            margin-right: 20px; /* Adjust the right margin as needed */
+        }
+
+        .form-container {
+            display: flex;
+            justify-content: flex-start;  /* Changed to flex-start */
+            align-items: center;
+            height: calc(100vh - 60px);
+            flex-direction: column;
+            padding-top: 50px;  /* Reduced the top padding */
+            margin: 0 20px; /* Added margin to align edges */
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input[type="text"],
+        select {
+            width: 300px; /* Reduced the width to 300px */
+            padding: 10px;
+            margin-bottom: 15px; /* Reduced the margin-bottom to 15px */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding-left: 5px; /* Added left padding */
+        }
+
+        select option[value=""] {
+            display: none;
+        }
+
+        .submit-button {
+            cursor: pointer;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 1em;
+            font-weight: 500;
+        }
+
+        .welcome-text {
+            font-size: 28px; /* Increased the font-size to 28px */
+            margin-bottom: 25px; /* Adjust the bottom margin to 25px */
+            margin-top: 50px; /* Add this to remove the top margin */
+        }
+    </style>
+</head>
+<body>
+    <div class="blue-banner">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="logo">
+        <a href="{{ url_for('admin') }}" class="admin-link">Admin</a>
+    </div>
+    <div class="form-container">
+        <h1 class="welcome-text">Welcome to Cornell Hedge Fund's Live Sentiment Platform!</h1>
+        <form id="userForm" action="{{ url_for('color_selection') }}" method="POST">
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <input type="text" id="full_name" name="full_name" placeholder="Enter Full Name" required> <!-- Updated placeholder and reduced width -->
+                <select id="table_selection" name="table_selection" required>
+                    <option value="">Select Your Table</option>
+                    <option value="table1">Behaviorals</option>
+                    <option value="table2">Technicals</option>
+                    <option value="table3">Stock Pitch</option>
+                    <option value="table4">Fun</option>
+                    <option value="table5">Group Case</option>
+                </select>
+            </div>
+            <button class="submit-button" type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

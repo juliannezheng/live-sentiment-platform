@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
             tableColumn.appendChild(newUserBox);
             // Create a remove button for each user
             var removeButton = document.createElement('button');
-            removeButton.textContent = 'Remove';
+            removeButton.textContent = 'X'; // The button is just an X
             removeButton.onclick = function() {
                 removeUser(fullName);
             };
@@ -72,4 +72,23 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Function to get the table column by selection
+    function getTableColumnBySelection(tableSelection) {
+        var tableColumns = document.querySelectorAll('.table-column');
+        for (var i = 0; i < tableColumns.length; i++) {
+            if (tableColumns[i].dataset.tableSelection === tableSelection) {
+                return tableColumns[i];
+            }
+        }
+        return null;
+    }
+
+    // Replace these functions with your own logic to handle user full name
+    function getUserFullName() {
+        return 'John Doe';
+    }
+
+    function setUserFullName(fullName) {
+        console.log('Setting user full name:', fullName);
+    }
 });

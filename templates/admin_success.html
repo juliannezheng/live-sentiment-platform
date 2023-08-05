@@ -93,6 +93,29 @@
             border-top: 1px solid #ccc;
             margin: 10px 0;
         }
+
+        .clear-button {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .clear-users {
+            cursor: pointer;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 1em;
+            font-weight: 500;
+            /* Matching the submit button styles */
+            margin: 20px 0;
+        }
+
+        /* Additional style for the clear users button on hover */
+        .clear-users:hover {
+            background-color: #1b8cce;
+        }
     </style>
 </head>
 <body>
@@ -132,6 +155,10 @@
         </div>
     </div>
 
+    <div class="clear-button">
+        <button class="clear-users" onclick="clearAllUsers()">Clear All Users</button>
+    </div>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.3/socket.io.js"></script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     <script>
@@ -143,6 +170,17 @@
                     alert('Failed to remove user with ID: ' + userId);
                 }
             });
+        }
+        function clearAllUsers() {
+            if (confirm('Are you sure you want to clear all users?')) {
+                $.post('/clear_users', function(response) {
+                    if (response.success) {
+                        location.reload();
+                    } else {
+                        alert('Failed to clear all users.');
+                    }
+                });
+            }
         }
     </script>
 </body>

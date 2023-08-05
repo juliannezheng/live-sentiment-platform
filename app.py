@@ -97,6 +97,13 @@ def remove_user():
 
     return jsonify(success=True)
 
+@app.route('/clear_users', methods=['POST'])
+def clear_users():
+    cursor = get_db().cursor()
+    cursor.execute('DELETE FROM users_new')
+    get_db().commit()
+    return jsonify(success=True)
+
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
     if request.method == 'POST':
